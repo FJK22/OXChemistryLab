@@ -5,7 +5,7 @@ using UnityEngine;
 public class RotateAround : MonoBehaviour
 {
     public GameObject target;
-    float timeLeft = 7.0f;
+    float timeLeft = 10.0f;
     void Update()
     {
         // Spin the object around the target at 20 degrees/second.
