@@ -6,6 +6,7 @@ public class ExperimentBase : MonoBehaviour
 {
     [SerializeField] string[] Instructions;
     int currentInstIndex;
+    
 
     public virtual void StartExperiment()
     {
@@ -14,5 +15,7 @@ public class ExperimentBase : MonoBehaviour
     public void UpdateInstruction()
     {
         ExperimentManager.instance.UpdateInstruction(Instructions[currentInstIndex]);
+       
+        
     }
 }

@@ -19,8 +19,11 @@ public class ExperimentManager : MonoBehaviour
     [Header("Current Experiment")]
     [SerializeField] ExperimentBase CurrentExperiment;
 
+    public GameObject Exam1VR;
+
     private void Awake()
     {
+        Exam1VR.active = false;
         instance = this;
     }
 
@@ -35,5 +38,11 @@ public class ExperimentManager : MonoBehaviour
     public void UpdateInstruction(string msg)
     {
         Txt_Instruction.text = msg;
+
+
+        if (CurrentExperiment.tag == "Exp1")
+        {
+            Exam1VR.active = true;
+        }
     }
 }
