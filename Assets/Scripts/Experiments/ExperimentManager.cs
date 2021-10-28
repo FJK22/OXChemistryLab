@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+using Looxid.Link;
 
 public class ExperimentManager : MonoBehaviour
 {
@@ -20,7 +22,9 @@ public class ExperimentManager : MonoBehaviour
     [SerializeField] ExperimentBase CurrentExperiment;
 
     public GameObject Exam1VR;
+
    
+
 
     private void Awake()
     {

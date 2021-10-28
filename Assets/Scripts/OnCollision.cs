@@ -9,11 +9,7 @@ public class OnCollision : MonoBehaviour
     public AudioSource exp1Audio;
     
 
-    
-
-   
-
-
+ 
     void OnTriggerEnter(Collider col)
     {
 

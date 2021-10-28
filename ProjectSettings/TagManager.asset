@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Exp1
   - WaterLiquid
+  - potassium
+  - VRCamera
+  - BeakerExam2
   layers:
   - Default
   - TransparentFX

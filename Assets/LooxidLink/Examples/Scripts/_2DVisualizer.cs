@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Valve.VR.InteractionSystem;
+using Valve.VR.InteractionSystem.Sample;
 
 namespace Looxid.Link
 {
@@ -75,7 +78,7 @@ namespace Looxid.Link
 
         private LinkDataValue leftActivity;
         private LinkDataValue rightActivity;
-        private LinkDataValue attention;
+        public static LinkDataValue attention;
         private LinkDataValue relaxation;
 
         private LinkDataValue delta;
@@ -83,6 +86,19 @@ namespace Looxid.Link
         private LinkDataValue alpha;
         private LinkDataValue beta;
         private LinkDataValue gamma;
+
+        public Button TablePan;
+        public Button startButton;
+
+
+        public GameObject Plate;
+        public GameObject PotassiumStone;
+        public GameObject MiniPotassiumStone;
+        public Renderer plate_renderer;
+        public MeshCollider meshColliderPotassium;
+
+        [Space]
+        [SerializeField] TextMeshProUGUI Txt_Instruction;
 
 
         void Start()
@@ -104,6 +120,10 @@ namespace Looxid.Link
             alpha = new LinkDataValue();
             beta = new LinkDataValue();
             gamma = new LinkDataValue();
+
+             plate_renderer = Plate.GetComponent<Renderer>();
+             meshColliderPotassium = PotassiumStone.GetComponent<MeshCollider>();
+
         }
 
         void OnEnable()
@@ -252,15 +272,15 @@ namespace Looxid.Link
                         Fp2SensorImage.color = sensorStatusData.IsSensorOn(EEGSensorID.Fp2) ? (Color)LooxidLinkManager.linkColor : (Color)offColor;
                         AF7SensorImage.color = sensorStatusData.IsSensorOn(EEGSensorID.AF7) ? (Color)LooxidLinkManager.linkColor : (Color)offColor;
                         AF8SensorImage.color = sensorStatusData.IsSensorOn(EEGSensorID.AF8) ? (Color)LooxidLinkManager.linkColor : (Color)offColor;
+                        LeftActivityIndicator.SetValue((float)leftActivity.value);
+                        RightActivityIndicator.SetValue((float)rightActivity.value);
+                        AttentionIndicator.SetValue((float)attention.value);
+                        RelaxationIndicator.SetValue((float)relaxation.value);
+
+
                     }
                 }
-                else if (this.SelectTab == Tab2DVisualizer.MIND_INDEX)
-                {
-                    LeftActivityIndicator.SetValue((float)leftActivity.value);
-                    RightActivityIndicator.SetValue((float)rightActivity.value);
-                    AttentionIndicator.SetValue((float)attention.value);
-                    RelaxationIndicator.SetValue((float)relaxation.value);
-                }
+                
                 else if (this.SelectTab == Tab2DVisualizer.FEATURE_INDEX)
                 {
                     List<EEGFeatureIndex> featureIndexList = LooxidLinkData.Instance.GetEEGFeatureIndexData(10.0f);
@@ -307,11 +327,9 @@ namespace Looxid.Link
         public void OnClickTabSensorStatus()
         {
             this.SelectTab = Tab2DVisualizer.SENSOR_STATUS;
-        }
-        public void OnClickTabMindIndex()
-        {
             this.SelectTab = Tab2DVisualizer.MIND_INDEX;
         }
+      
         public void OnClickTabFeatureIndex()
         {
             this.SelectTab = Tab2DVisualizer.FEATURE_INDEX;
@@ -377,6 +395,38 @@ namespace Looxid.Link
             leftActivity.value = Mathf.Lerp((float)leftActivity.value, (float)leftActivity.target, 0.2f);
             rightActivity.value = Mathf.Lerp((float)rightActivity.value, (float)rightActivity.target, 0.2f);
             attention.value = Mathf.Lerp((float)attention.value, (float)attention.target, 0.2f);
+
+      
+            PeriodTable.isInteractable = attention.value >= 0.4;
+            startButton.interactable = attention.value >= 0.4;
+
+            
+
+            if (MiniPotassiumStone.activeSelf == false)
+            {
+                if (attention.value < 0.4)
+                {
+                    plate_renderer.material.color = Color.grey;
+                    meshColliderPotassium.enabled = false;
+                    Txt_Instruction.text = "Your attention level is low. You can only complete this experiment with higher attention levels.";
+
+                }
+                else if (attention.value >= 0.4)
+                {
+                    plate_renderer.material.color = new Color(0.611f, 0.869f, 0.906f, 1.000f);
+                    meshColliderPotassium.enabled = true;
+                    Txt_Instruction.text = "Grab the Potassium and add it into the water of the beaker.";
+                }
+
+            }
+            else
+            {
+                plate_renderer.material.color = new Color(0.611f, 0.869f, 0.906f, 1.000f);
+                Txt_Instruction.text = "This is a chemical reaction of potassium in the water. Well done for completing this experiment.";
+            }
+
+
+
             relaxation.value = Mathf.Lerp((float)relaxation.value, (float)relaxation.target, 0.2f);
 
             delta.value = Mathf.Lerp((float)delta.value, (float)delta.target, 0.2f);
