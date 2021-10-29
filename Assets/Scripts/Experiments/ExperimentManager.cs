@@ -23,7 +23,9 @@ public class ExperimentManager : MonoBehaviour
 
     public GameObject Exam1VR;
 
-   
+    public GameObject Exam2VR;
+
+
 
 
     private void Awake()
