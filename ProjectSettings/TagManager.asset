@@ -9,6 +9,7 @@ TagManager:
   - potassium
   - VRCamera
   - BeakerExam2
+  - Exp2
   layers:
   - Default
   - TransparentFX

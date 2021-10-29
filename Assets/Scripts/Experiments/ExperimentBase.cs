@@ -12,10 +12,21 @@ public class ExperimentBase : MonoBehaviour
     {
         UpdateInstruction();
     }
+
     public void UpdateInstruction()
     {
         ExperimentManager.instance.UpdateInstruction(Instructions[currentInstIndex]);
-       
-        
+
+    }
+    public virtual void StartExperiment2()
+    {
+        UpdateInstruction2();
+    }
+    
+    public void UpdateInstruction2()
+    {
+        ExperimentManager.instance.UpdateInstruction2(Instructions[currentInstIndex]);
+
+
     }
 }

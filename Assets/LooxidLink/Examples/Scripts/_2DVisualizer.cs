@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Valve.VR.InteractionSystem;
 using Valve.VR.InteractionSystem.Sample;
+using UnitySimpleLiquid;
 
 namespace Looxid.Link
 {
@@ -90,15 +91,24 @@ namespace Looxid.Link
         public Button TablePan;
         public Button startButton;
 
-
+        [Space]
+        [Header("Experiment 1")]
         public GameObject Plate;
         public GameObject PotassiumStone;
         public GameObject MiniPotassiumStone;
         public Renderer plate_renderer;
         public MeshCollider meshColliderPotassium;
+        
+        [Space]
+        [Header("Experiment 2")]
+        public GameObject Aluminum;
+        public GameObject MiniAluminum;
+        
 
         [Space]
         [SerializeField] TextMeshProUGUI Txt_Instruction;
+        public GameObject ExperimentManager;
+
 
 
         void Start()
@@ -400,33 +410,39 @@ namespace Looxid.Link
             PeriodTable.isInteractable = attention.value >= 0.4;
             startButton.interactable = attention.value >= 0.4;
 
-            
 
-            if (MiniPotassiumStone.activeSelf == false)
+            if (ExperimentManager.GetComponent<ExperimentManager>().CurrentExperiment1 == true)
             {
-                if (attention.value < 0.4)
+                if (MiniPotassiumStone.activeSelf == false)
                 {
-                    plate_renderer.material.color = Color.grey;
-                    meshColliderPotassium.enabled = false;
-                    Txt_Instruction.text = "Your attention level is low. You can only complete this experiment with higher attention levels.";
+
+                    if (attention.value < 0.4)
+                    {
+                        plate_renderer.material.color = Color.grey;
+                        meshColliderPotassium.enabled = false;
+                        Txt_Instruction.text = "Your attention level is low. You can only complete this experiment with higher attention levels.";
+
+                    }
+                    else if (attention.value >= 0.4)
+                    {
+                        plate_renderer.material.color = new Color(0.611f, 0.869f, 0.906f, 1.000f);
+                        meshColliderPotassium.enabled = true;
+                        Txt_Instruction.text = "Grab the Potassium and add it into the water of the beaker.";
+                    }
 
                 }
-                else if (attention.value >= 0.4)
+                else if (MiniPotassiumStone.activeSelf == true)
                 {
                     plate_renderer.material.color = new Color(0.611f, 0.869f, 0.906f, 1.000f);
-                    meshColliderPotassium.enabled = true;
-                    Txt_Instruction.text = "Grab the Potassium and add it into the water of the beaker.";
+                    Txt_Instruction.text = "This is a chemical reaction of potassium in the water. Well done for completing this experiment.";
+
+                    StartCoroutine("Experiment2");
                 }
 
             }
-            else
-            {
-                plate_renderer.material.color = new Color(0.611f, 0.869f, 0.906f, 1.000f);
-                Txt_Instruction.text = "This is a chemical reaction of potassium in the water. Well done for completing this experiment.";
-            }
 
-
-
+            
+            
             relaxation.value = Mathf.Lerp((float)relaxation.value, (float)relaxation.target, 0.2f);
 
             delta.value = Mathf.Lerp((float)delta.value, (float)delta.target, 0.2f);
@@ -434,6 +450,69 @@ namespace Looxid.Link
             alpha.value = Mathf.Lerp((float)alpha.value, (float)alpha.target, 0.2f);
             beta.value = Mathf.Lerp((float)beta.value, (float)beta.target, 0.2f);
             gamma.value = Mathf.Lerp((float)gamma.value, (float)gamma.target, 0.2f);
+        }
+
+        IEnumerator Experiment2()
+        {
+
+            yield return new WaitForSeconds(10);
+
+            startExperiment2();
+           
+        }
+
+        private void startExperiment2()
+        {
+
+            ExperimentManager.GetComponent<ExperimentManager>().StartExperiment2();
+
+            if (ExperimentManager.GetComponent<ExperimentManager>().CurrentExperiment2 == true)
+            {
+
+                if (MiniAluminum.activeSelf == false)
+                {
+
+                    if (Aluminum.GetComponent<MeshCollider>().enabled == false)
+                    {
+                        if (attention.value < 0.4)
+                        {
+                            //plate_renderer.material.color = Color.grey;
+                            // meshColliderPotassium.enabled = false;
+                            Txt_Instruction.text = "Your attention level is low. You can only complete this experiment with higher attention levels.";
+                        }
+                        else if (attention.value >= 0.4)
+                        {
+                            //plate_renderer.material.color = new Color(0.611f, 0.869f, 0.906f, 1.000f);
+                            //meshColliderPotassium.enabled = true;
+                            Txt_Instruction.text = "Pour Bromine to the beaker container.";
+                        }
+                    }
+                    else if (Aluminum.GetComponent<MeshCollider>().enabled == true)
+                    {
+                        if (attention.value < 0.4)
+                        {
+                            //plate_renderer.material.color = Color.grey;
+                            // meshColliderPotassium.enabled = false;
+                            Txt_Instruction.text = "Your attention level is low. You can only complete this experiment with higher attention levels.";
+                        }
+                        else if (attention.value >= 0.4)
+                        {
+                            //plate_renderer.material.color = new Color(0.611f, 0.869f, 0.906f, 1.000f);
+                            //meshColliderPotassium.enabled = true;
+                            Txt_Instruction.text = "Put the alimunium into the beaker with bromine.";
+                        }
+
+                    }
+
+                }
+                else if (MiniAluminum.activeSelf == true)
+                {
+                    plate_renderer.material.color = new Color(0.611f, 0.869f, 0.906f, 1.000f);
+                    Txt_Instruction.text = "This is a chemical reaction of aliminum and bromine. Well done for completing this experiment.";
+                    //StartCoroutine("Experiment3");
+                }
+            }
+
         }
 
         public void OnSelectChannel(int num)

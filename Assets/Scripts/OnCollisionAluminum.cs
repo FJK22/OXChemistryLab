@@ -18,6 +18,8 @@ public class OnCollisionAluminum : MonoBehaviour
             bromineAlimunim.enabled = true;
             MiniAluminum.SetActive(true);
 
+            this.gameObject.SetActive(true);
+
             Destroy(this.gameObject);
 
 

@@ -15,7 +15,7 @@ public class RotateAround : MonoBehaviour
         
         if (timeLeft < 0)
         {
-            Destroy(this.gameObject);
+            this.gameObject.SetActive(false);
         }
     }
 }
