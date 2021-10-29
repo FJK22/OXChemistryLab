@@ -19,7 +19,7 @@ public class OnCollision : MonoBehaviour
             this.gameObject.SetActive(false);
             MiniPotassium.SetActive(true);
             exp1Audio.enabled = true;
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
             CollisionPotassium = true;
 
 

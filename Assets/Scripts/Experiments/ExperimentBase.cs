@@ -29,4 +29,16 @@ public class ExperimentBase : MonoBehaviour
 
 
     }
+
+    public virtual void StartExperiment3()
+    {
+        UpdateInstruction3();
+    }
+
+    public void UpdateInstruction3()
+    {
+        ExperimentManager.instance.UpdateInstruction3(Instructions[currentInstIndex]);
+
+
+    }
 }

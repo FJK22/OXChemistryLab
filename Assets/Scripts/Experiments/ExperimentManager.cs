@@ -27,17 +27,24 @@ public class ExperimentManager : MonoBehaviour
     public GameObject Visualiser2D;
 
     public GameObject Exam2VR;
+    public GameObject Exam3VR;
 
+    public GameObject PotassiumStone;
+    public GameObject MiniPotassiumStone;
+
+    public GameObject Aluminum;
+    public GameObject MiniAluminum;
 
     public bool CurrentExperiment1;
     public bool CurrentExperiment2;
-
+    public bool CurrentExperiment3;
 
 
     private void Awake()
     {
         Exam1VR.SetActive(false);
         Exam2VR.SetActive(false);
+        Exam3VR.SetActive(false);
         instance = this;
     }
 
@@ -61,14 +68,13 @@ public class ExperimentManager : MonoBehaviour
         }
 
       
-
-      
     }
 
-   
 
     public void StartExperiment2()
     {
+       
+
         CurrentExperiment1 = false;
         CurrentExperiment2 = true;
 
@@ -88,7 +94,38 @@ public class ExperimentManager : MonoBehaviour
         {
             Exam1VR.SetActive(false);
             Exam2VR.SetActive(true);
+            Destroy(PotassiumStone);
+            Destroy(MiniPotassiumStone);
 
+        }
+    }
+
+    public void StartExperiment3()
+    {
+        CurrentExperiment1 = false;
+        CurrentExperiment2 = false;
+        CurrentExperiment3 = true;
+
+       
+
+        Txt_Instruction.transform.parent.gameObject.SetActive(true);
+
+        CurrentExperiment = AllExperiments[2];
+        CurrentExperiment.StartExperiment3();
+    }
+
+    public void UpdateInstruction3(string msg)
+    {
+        Txt_Instruction.text = msg;
+
+
+        if (CurrentExperiment.tag == "Exp3")
+        {
+            Exam1VR.SetActive(false);
+            Exam2VR.SetActive(false);
+            Exam3VR.SetActive(true);
+            Destroy(Aluminum);
+            Destroy(MiniAluminum);
 
         }
     }

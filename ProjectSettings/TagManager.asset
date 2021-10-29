@@ -10,6 +10,7 @@ TagManager:
   - VRCamera
   - BeakerExam2
   - Exp2
+  - Exp3
   layers:
   - Default
   - TransparentFX

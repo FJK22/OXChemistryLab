@@ -9,10 +9,7 @@ public class ScaleDown : MonoBehaviour
     
 
 
-    void Start()
-    {
-        
-    }
+ 
 
     void ScaleToExample()
     {
