@@ -413,7 +413,7 @@ namespace Looxid.Link
             attention.value = Mathf.Lerp((float)attention.value, (float)attention.target, 0.2f);
 
       
-            PeriodTable.isInteractable = attention.value >= 0.4;
+           // PeriodTable.isInteractable = attention.value >= 0.4;
             startButton.interactable = attention.value >= 0.4;
 
 

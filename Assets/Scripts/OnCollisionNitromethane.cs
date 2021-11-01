@@ -9,6 +9,11 @@ public class OnCollisionNitromethane : MonoBehaviour
 {
     public GameObject FluidPlate;
 
+    void Start()
+    {
+        
+    }
+
 
     void OnTriggerEnter(Collider col)
     {
@@ -16,7 +21,7 @@ public class OnCollisionNitromethane : MonoBehaviour
         if (col.gameObject.tag == "FluidPlate")
         {
 
-            FluidPlate.GetComponent<LiquidContainer>().fillAmountPercent = 0.3f;
+            FluidPlate.GetComponent<LiquidContainer>().fillAmountPercent = 0.00005f;
          
 
 
