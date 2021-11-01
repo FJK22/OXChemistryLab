@@ -11,6 +11,7 @@ TagManager:
   - BeakerExam2
   - Exp2
   - Exp3
+  - FluidPlate
   layers:
   - Default
   - TransparentFX
