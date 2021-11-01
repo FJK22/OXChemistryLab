@@ -16,7 +16,6 @@ public class ExperimentManager : MonoBehaviour
     [Space]
     [SerializeField] TextMeshProUGUI Txt_Instruction;
 
-
     [Header("All Experiments")]
     [SerializeField] ExperimentBase[] AllExperiments;
 
@@ -24,16 +23,8 @@ public class ExperimentManager : MonoBehaviour
     [SerializeField] ExperimentBase CurrentExperiment;
 
     public GameObject Exam1VR;
-    public GameObject Visualiser2D;
-
     public GameObject Exam2VR;
     public GameObject Exam3VR;
-
-    public GameObject PotassiumStone;
-    public GameObject MiniPotassiumStone;
-
-    public GameObject Aluminum;
-    public GameObject MiniAluminum;
 
     public bool CurrentExperiment1;
     public bool CurrentExperiment2;
@@ -94,8 +85,7 @@ public class ExperimentManager : MonoBehaviour
         {
             Exam1VR.SetActive(false);
             Exam2VR.SetActive(true);
-            Destroy(PotassiumStone);
-            Destroy(MiniPotassiumStone);
+
 
         }
     }
@@ -124,8 +114,7 @@ public class ExperimentManager : MonoBehaviour
             Exam1VR.SetActive(false);
             Exam2VR.SetActive(false);
             Exam3VR.SetActive(true);
-            Destroy(Aluminum);
-            Destroy(MiniAluminum);
+            
 
         }
     }
