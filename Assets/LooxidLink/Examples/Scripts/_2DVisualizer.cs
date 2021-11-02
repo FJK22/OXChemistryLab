@@ -108,13 +108,25 @@ namespace Looxid.Link
         public MeshCollider meshColliderBromine;
         public MeshCollider meshColliderBromineFluid;
         public CapsuleCollider capsuleColliderBromine;
-        
+
+        [Space]
+        [Header("Experiment 3")]
+        public GameObject FluidPlate;
+        public MeshCollider meshColliderNitromethane;
+        public MeshCollider meshColliderNitromethaneFluid;
+        public CapsuleCollider capsuleColliderNitromethane;
+        public MeshCollider meshColliderMethanol;
+        public MeshCollider meshColliderMethanolFluid;
+        public CapsuleCollider capsuleColliderMethanol;
+        public MeshCollider meshColliderLighter;
+        public BoxCollider boxColliderLighter;
+        public GameObject BurnerFlame;
 
         [Space]
         [SerializeField] TextMeshProUGUI Txt_Instruction;
         public GameObject ExperimentManager;
-
-
+        private bool exp1finished = false;
+        private bool attentionChecking = false;
 
         void Start()
         {
@@ -426,17 +438,18 @@ namespace Looxid.Link
                     {
                         meshColliderPotassium.enabled = false;
                         Txt_Instruction.text = "Your attention level is low. You can only complete this experiment with higher attention levels.";
-
+                        attentionChecking = true;
                     }
-                    else if (attention.value >= 0.4)
+                    else
                     {
                         meshColliderPotassium.enabled = true;
                         Txt_Instruction.text = "Grab the Potassium and add it into the water of the beaker.";
                     }
 
                 }
-                else if (MiniPotassiumStone.activeSelf == true)
+                else
                 {
+                    attentionChecking = false;
                     Txt_Instruction.text = "This is a chemical reaction of potassium in the water. Well done for completing this experiment.";
                     Destroy(PotassiumStone);
                     StartCoroutine("Experiment2");
@@ -445,53 +458,106 @@ namespace Looxid.Link
             }
             if (ExperimentManager.GetComponent<ExperimentManager>().CurrentExperiment2 == true)
             {
-
-                if (MiniAluminum.activeSelf == false)
+                if(Beaker.GetComponent<LiquidContainer>().fillAmountPercent > 0.5f) meshColliderAluminum.enabled = (attention.value >= 0.4f);
+                
+                if (attention.value < 0.4)
                 {
-
-                    if (meshColliderAluminum.enabled == false)
+                    if (attentionChecking)
                     {
-                        if (attention.value < 0.4)
-                        {
-                            meshColliderBromine.enabled = false;
-                            meshColliderBromineFluid.enabled = false;
-                            capsuleColliderBromine.enabled = false;
-                            Txt_Instruction.text = "Your attention level is low. You can only complete this experiment with higher attention levels.";
-                        }
-                        else if (attention.value >= 0.4)
-                        {
-                            meshColliderBromine.enabled = true;
-                            meshColliderBromineFluid.enabled = true;
-                            capsuleColliderBromine.enabled = true;
-                            Txt_Instruction.text = "Pour Bromine to the beaker container.";
-                        }
+                        meshColliderBromine.enabled = false;
+                        meshColliderBromineFluid.enabled = false;
+                        capsuleColliderBromine.enabled = false;
+                        Txt_Instruction.text = "Your attention level is low. You can only complete this experiment with higher attention levels.";
                     }
-                    else if (Beaker.GetComponent<LiquidContainer>().fillAmountPercent >= 0.5f)
+                } 
+                else if (MiniAluminum.activeSelf == false)
+                {
+                    if (Beaker.GetComponent<LiquidContainer>().fillAmountPercent < 0.5f)
                     {
-                        if (attention.value < 0.4)
-                        {
-                            meshColliderAluminum.enabled = false;
-                            Txt_Instruction.text = "Your attention level is low. You can only complete this experiment with higher attention levels.";
-                        }
-                        else if (attention.value >= 0.4)
-                        {
-                            meshColliderAluminum.enabled = true;
-                            Txt_Instruction.text = "Put the alimunium into the beaker with bromine.";
-                        }
-
+                        meshColliderBromine.enabled = true;
+                        meshColliderBromineFluid.enabled = true;
+                        capsuleColliderBromine.enabled = true;
+                        Txt_Instruction.text = "Pour Bromine to the beaker container.";
                     }
-
+                    else
+                    {
+                        Txt_Instruction.text = "Put the alimunium into the beaker with bromine.";
+                    }
                 }
-                else if (MiniAluminum.activeSelf == true)
+                else
                 {
-                    //plate_renderer.material.color = new Color(0.611f, 0.869f, 0.906f, 1.000f);
+                    attentionChecking = false;
                     Destroy(Aluminum);
-                    Txt_Instruction.text = "This is a chemical reaction of aliminum and bromine. Well done for completing this experiment.";
+                    Txt_Instruction.text = "This is a chemical reaction of aliminum and bromine. Well done for completing this experiment."; 
                     StartCoroutine("Experiment3");
                 }
             }
             if (ExperimentManager.GetComponent<ExperimentManager>().CurrentExperiment3 == true)
             {
+
+                if (FluidPlate.GetComponent<LiquidContainer>().fillAmountPercent > 0.9f) meshColliderLighter.enabled = (attention.value >= 0.4f);
+                if (FluidPlate.GetComponent<LiquidContainer>().fillAmountPercent > 0.9f) boxColliderLighter.enabled = (attention.value >= 0.4f);
+
+                if (attention.value < 0.4)
+                {
+                    if (attentionChecking)
+                    {
+                        meshColliderNitromethane.enabled = false;
+                        meshColliderNitromethaneFluid.enabled = false;
+                        capsuleColliderNitromethane.enabled = false;
+
+                        meshColliderMethanol.enabled = false;
+                        meshColliderMethanolFluid.enabled = false;
+                        capsuleColliderMethanol.enabled = false;
+
+                        meshColliderLighter.enabled = false;
+                        boxColliderLighter.enabled = false;
+                        Txt_Instruction.text = "Your attention level is low. You can only complete this experiment with higher attention levels.";
+                    }
+                }
+                else if (BurnerFlame.activeSelf == false)
+                {
+                    if (FluidPlate.GetComponent<LiquidContainer>().fillAmountPercent == 0.0f)
+                    {
+                        meshColliderNitromethane.enabled = true;
+                        meshColliderNitromethaneFluid.enabled = true;
+                        capsuleColliderNitromethane.enabled = true;
+
+                        meshColliderMethanol.enabled = false;
+                        meshColliderMethanolFluid.enabled = false;
+                        capsuleColliderMethanol.enabled = false;
+
+                        meshColliderLighter.enabled = false;
+                        boxColliderLighter.enabled = false;
+                        Txt_Instruction.text = "Pour the Nitromethane into the glass plate.";
+                    }
+
+                    else if (FluidPlate.GetComponent<LiquidContainer>().fillAmountPercent <= 0.3f)
+                    {
+                        meshColliderNitromethane.enabled = false;
+                        meshColliderNitromethaneFluid.enabled = false;
+                        capsuleColliderNitromethane.enabled = false;
+
+                        meshColliderMethanol.enabled = true;
+                        meshColliderMethanolFluid.enabled = true;
+                        capsuleColliderMethanol.enabled = true;
+
+                        meshColliderLighter.enabled = false;
+                        boxColliderLighter.enabled = false;
+                        Txt_Instruction.text = "Pour the Methanol that is in the tube into the glass plate.";
+                    }
+                    else
+                    {
+                        Txt_Instruction.text = "Add the lighter into the glass plate.";
+                    }
+                }
+
+                else
+                {
+                    attentionChecking = false;
+                    Txt_Instruction.text = "This is a chemical reaction of Nitromethane combnined with Methanol. Well done for completing this experiment. You can now remove the headset.";
+
+                }
 
             }
 
@@ -509,22 +575,26 @@ namespace Looxid.Link
 
         IEnumerator Experiment2()
         {
-            
-            yield return new WaitForSeconds(10);
-            ExperimentManager.GetComponent<ExperimentManager>().StartExperiment2();
-        
+            if (!exp1finished)
+            {
+                exp1finished = true;
+                yield return new WaitForSeconds(10);
+                attentionChecking = true;
+                ExperimentManager.GetComponent<ExperimentManager>().StartExperiment2();
+            }
         }
 
 
         IEnumerator Experiment3()
         {
-            
             yield return new WaitForSeconds(15);
+            attentionChecking = true;
             ExperimentManager.GetComponent<ExperimentManager>().StartExperiment3();
 
         }
+        
 
-  
+
 
         public void OnSelectChannel(int num)
         {

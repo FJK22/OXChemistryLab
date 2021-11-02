@@ -64,12 +64,10 @@ public class ExperimentManager : MonoBehaviour
 
     public void StartExperiment2()
     {
-       
-
         CurrentExperiment1 = false;
         CurrentExperiment2 = true;
 
-       
+
         Txt_Instruction.transform.parent.gameObject.SetActive(true);
 
         CurrentExperiment = AllExperiments[1];
